@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from ServiceService WSDL service -->
+
+  <service name="Service" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://services"/>
+      <parameter name="wsdlServiceElement" value="ServiceService"/>
+      <parameter name="schemaQualified" value="http://model,http://services"/>
+      <parameter name="wsdlServicePort" value="Service"/>
+      <parameter name="className" value="services.Service"/>
+      <parameter name="wsdlPortType" value="Service"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://services" xmlns:retNS="http://services" xmlns:rtns="http://model" name="signIn" qname="operNS:signIn" returnQName="retNS:signInReturn" returnType="rtns:User" soapAction="">
+        <parameter xmlns:pns="http://services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:username" type="tns:string"/>
+        <parameter xmlns:pns="http://services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:password" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://services" xmlns:retNS="http://services" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="listState" qname="operNS:listState" returnQName="retNS:listStateReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:country" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://services" xmlns:retNS="http://services" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="listCountry" qname="operNS:listCountry" returnQName="retNS:listCountryReturn" returnType="rtns:string" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://services" xmlns:retNS="http://services" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="listCity" qname="operNS:listCity" returnQName="retNS:listCityReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:state" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://services" xmlns:retNS="http://services" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="signUp" qname="operNS:signUp" returnQName="retNS:signUpReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://services" xmlns:tns="http://model" qname="pns:user" type="tns:User"/>
+      </operation>
+      <operation xmlns:operNS="http://services" xmlns:retNS="http://services" xmlns:rtns="http://model" name="displayUsers" qname="operNS:displayUsers" returnQName="retNS:displayUsersReturn" returnType="rtns:User" soapAction="">
+        <parameter xmlns:pns="http://services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:preferenceId" type="tns:int"/>
+        <parameter xmlns:pns="http://services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:offset" type="tns:int"/>
+        <parameter xmlns:pns="http://services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:noOfRecords" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://services" xmlns:retNS="http://services" xmlns:rtns="http://model" name="getLatestMovies" qname="operNS:getLatestMovies" returnQName="retNS:getLatestMoviesReturn" returnType="rtns:Movie" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://services" xmlns:retNS="http://services" xmlns:rtns="http://model" name="displayMovies" qname="operNS:displayMovies" returnQName="retNS:displayMoviesReturn" returnType="rtns:Movie" soapAction="">
+        <parameter xmlns:pns="http://services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:filterAlphabet" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://services" xmlns:retNS="http://services" xmlns:rtns="http://model" name="addToCart" qname="operNS:addToCart" returnQName="retNS:addToCartReturn" returnType="rtns:MovieCart" soapAction="">
+        <parameter xmlns:pns="http://services" xmlns:tns="http://model" qname="pns:movieCart" type="tns:MovieCart"/>
+      </operation>
+      <operation xmlns:operNS="http://services" xmlns:retNS="http://services" xmlns:rtns="http://model" name="retrieveCart" qname="operNS:retrieveCart" returnQName="retNS:retrieveCartReturn" returnType="rtns:MovieCart" soapAction="">
+        <parameter xmlns:pns="http://services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:userId" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://services" xmlns:retNS="http://services" xmlns:rtns="http://model" name="retrieveMovieDataForCart" qname="operNS:retrieveMovieDataForCart" returnQName="retNS:retrieveMovieDataForCartReturn" returnType="rtns:Movie" soapAction="">
+        <parameter xmlns:pns="http://services" xmlns:tns="http://model" qname="pns:cartData" type="tns:MovieCart"/>
+      </operation>
+      <operation xmlns:operNS="http://services" name="deleteFromCart" qname="operNS:deleteFromCart" soapAction="">
+        <parameter xmlns:pns="http://services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:userID" type="tns:int"/>
+        <parameter xmlns:pns="http://services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:movieID" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://services" name="closeAllConn" qname="operNS:closeAllConn" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://services" xmlns:retNS="http://services" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="paymentGatewayCheck" qname="operNS:paymentGatewayCheck" returnQName="retNS:paymentGatewayCheckReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://services" xmlns:tns="http://model" qname="pns:user" type="tns:User"/>
+      </operation>
+      <operation xmlns:operNS="http://services" name="addBalance" qname="operNS:addBalance" soapAction="">
+        <parameter xmlns:pns="http://services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:userID" type="tns:int"/>
+        <parameter xmlns:pns="http://services" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:amountToAdd" type="tns:float"/>
+      </operation>
+      <operation xmlns:operNS="http://services" xmlns:retNS="http://services" xmlns:rtns="http://model" name="checkOutMovie" qname="operNS:checkOutMovie" returnQName="retNS:checkOutMovieReturn" returnType="rtns:Movie" soapAction="">
+        <parameter xmlns:pns="http://services" xmlns:tns="http://model" qname="pns:movie" type="tns:Movie"/>
+        <parameter xmlns:pns="http://services" xmlns:tns="http://model" qname="pns:user" type="tns:User"/>
+      </operation>
+      <parameter name="allowedMethods" value="checkOutMovie signUp listCity displayUsers retrieveMovieDataForCart getLatestMovies listState displayMovies deleteFromCart retrieveCart closeAllConn paymentGatewayCheck listCountry signIn addBalance addToCart"/>
+
+      <typeMapping xmlns:ns="http://model" qname="ns:User" type="java:model.User" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://model" qname="ns:Payment" type="java:model.Payment" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://model" qname="ns:Country" type="java:model.Country" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://model" qname="ns:MovieCart" type="java:model.MovieCart" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://model" qname="ns:Movie" type="java:model.Movie" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://model" qname="ns:City" type="java:model.City" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://model" qname="ns:MovieCategory" type="java:model.MovieCategory" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://model" qname="ns:State" type="java:model.State" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://model" qname="ns:Address" type="java:model.Address" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://model" qname="ns:Status" type="java:model.Status" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://model" qname="ns:Preference" type="java:model.Preference" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>

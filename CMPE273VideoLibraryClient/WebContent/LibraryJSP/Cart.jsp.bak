@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<%@page import="servlet.RetrieveCartServlet"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.Movie"%>
+<%@page import="model.MovieCart"%>
+
+<%@include file="Common.jsp"%>
+<html xmlns="http://www.w3.org/1999/xhtml" manifest="mycache.appcache">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>My Video Library</title>
+<link rel="stylesheet" href="../LibraryCSS/style.css" type="text/css" />
+<link rel="stylesheet" href="../LibraryCSS/addtocart.css"
+	type="text/css" />
+
+</head>
+
+<body>
+	<%	
+	String state = (String)request.getAttribute("state");
+	if( (state != null) && (!("").equals(state))){
+%>
+	<script>
+	alert('<%= state %>');
+	</script>
+	
+<% 
+	}
+		MovieCart[] movieCartArray = (MovieCart[]) request
+				.getAttribute("cartData");
+		Movie[] movieArray = (Movie[]) request
+				.getAttribute("movieDataForCart");
+		//for (int j = 0; j < movieArray.length; j++){
+		//	System.out.println("id :"+movieArray[j].getMovieId());
+		//}
+	%>
+	<div>
+		<form method="post" action="DecideAction">
+			<table width="80%" style="margin-left: 120px; margin-top: 50px;">
+
+				<thead>
+					<tr>
+						<th scope=“col”>Course Field 1</th>
+						<th scope=“col”>Course Field 2</th>
+						<th scope=“col”>Course Field 3</th>
+						<th scope=“col”>Course Field 4</th>
+						<th scope=“col”>Course Field 5</th>
+						<th scope=“col”>Course Field 6</th>
+						<th scope=“col”>Course Field 7</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr
+						style="border-right: 1px solid #C1DAD7; border-bottom: 1px solid #C1DAD7; background: #fff; padding: 6px 6px 6px 12px; color: #4f6b72;">
+						<td style="text-align: center;" scope=“row”>Data 1</td>
+						<td style="text-align: center;">Data 2</td>
+						<td style="text-align: center;">Data 3</td>
+						<td style="text-align: center;">Data 4</td>
+						<td style="text-align: center;">Data 5</td>
+						<td style="text-align: center;"><input type="checkbox"
+							name="checkboxId" value="Object Id of Mongo DB"
+							id="Object Id Of MongoDB"
+							onClick="AddToTempArrayForCheckout();"></td>
+						<td style="text-align: center;">
+							<form id="deleteCourseForm" method="post" action="Action for deleting Course()">
+								<div class="form-row">
+									<input type="hidden" name="hidden"
+										value="Mongo DB Object Id"> <input
+										class="submit" type="submit" value="Remove Course" />
+								</div>
+							</form>
+						</td>
+
+					</tr>
+					<%
+						}
+					%>
+					<tr>
+						<td colspan="2" style="text-align: center;"><INPUT
+							TYPE="submit" name="Checkout" value="Proceed To Payment"
+							SRC="../LibraryIMG/proceed_to_payment_new.jpg" ALT="SUBMIT!">
+						</td>
+						<td colspan="2" style="text-align: center;"><INPUT
+							TYPE="submit" name="MovieDetails" value="Continue Shopping"
+							SRC="../LibraryIMG/continue_shopping.png" ALT="SUBMIT!"></td>
+					</tr>
+				</tbody>
+			</table>
+
+		</form>
+	</div>
+
+	<script>
+		function AddToTempArrayForCheckout() {
+			var total = 0;
+	<%
+		ArrayList<Movie> movieArrayLstForCheckout = new ArrayList<Movie>(); 
+		int j = 0;
+			for (j = 0; j < movieArray.length; j++) {%>
+		var checkBoxId =
+	<%=movieArray[j].getMovieId()%>
+		;
+			if (document.getElementById(checkBoxId).checked == true) {
+				total = total + 1;
+				<% movieArrayLstForCheckout.add(movieArray[j]); %>
+			}
+	<%}%>
+		
+	<%if (user.getPreference().getPreferenceId() == 2) {%>
+		if (total > 10) {
+				alert("You can select only 10 movies at a time");
+			}
+	<%} else if (user.getPreference().getPreferenceId() == 1) {%>
+		if (total > 2) {
+				alert("You can select only 2 movies at a time");
+			}
+	<%}%>
+		}
+	</script>
+</body>
+
+
+</html>
